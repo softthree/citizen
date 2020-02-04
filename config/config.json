@@ -1,0 +1,8 @@
+{
+    "development": {
+        "db": "mongodb+srv://shahvais5:shahvais5@cluster0-zqtdp.mongodb.net/test?retryWrites=true&w=majority"
+    },
+    "production": {
+        "db": "mongodb+srv://shahvais5:shahvais5@cluster0-zqtdp.mongodb.net/test?retryWrites=true&w=majority"
+    }
+}
