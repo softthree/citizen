@@ -6,7 +6,7 @@ const environment = process.env.NODE_ENV || 'development';
 const routes = require('./routes');
 const cors = require('cors');
 const statusCodes = require('./utils/statusCodes');
-config.initialize(environment);
+// config.initialize(environment);
 
 // Allowing CORS
 app.use(cors());

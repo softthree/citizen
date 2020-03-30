@@ -7,19 +7,21 @@ const nodemailer = require("nodemailer");
 
 const generalActions = {
   contact: asyncMiddleware(async (req, res) => {
+    console.log(req.body)
     let smtpTransport = nodemailer.createTransport({
       service: "Gmail",
       port: 465,
+      // insert the SoftThree Mail credentials in auth
       auth: {
-        user: "maximaecommerce12@gmail.com",
-        pass: "coders123"
+        user: "softthree3@gmail.com",
+        pass: "codedecoder"
       }
     });
     let mailOptions = {
-      from: 'maximaecommerce12@gmail.com',
-      to: "ayazhussainbs@gmail.com",
-      subject: "Message From edgeon.io",
-      html: req.body.name + " wants to contact you. <br> His Email Is:" + req.body.email + "<br> His Message:" + req.body.message
+      from: req.body.email,
+      to: req.body.to,
+      subject: "Some One Want To Connect With SoftThree",
+      html: req.body.name + " wants to contact you. <br> His / Her Email Is:" + req.body.email + "<br> His / HerMessage:" + req.body.message
     };
     let sentMail = await smtpTransport.sendMail(mailOptions);
     res.status(status.success.accepted).json({
