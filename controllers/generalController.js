@@ -21,7 +21,7 @@ const generalActions = {
       from: req.body.email,
       to: req.body.to,
       subject: "Some One Want To Connect With SoftThree",
-      html: req.body.name + " wants to contact you. <br> His / Her Email Is:" + req.body.email + "<br> His / HerMessage:" + req.body.message
+      html: req.body.name + " wants to contact you. <br> His / Her Email Is:" + req.body.email + "<br> His / Her Message:" + req.body.message
     };
     let sentMail = await smtpTransport.sendMail(mailOptions);
     res.status(status.success.accepted).json({

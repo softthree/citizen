@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const config = require('./config/configuration');
 const port = process.env.PORT || 3000;
@@ -6,7 +7,7 @@ const environment = process.env.NODE_ENV || 'development';
 const routes = require('./routes');
 const cors = require('cors');
 const statusCodes = require('./utils/statusCodes');
-// config.initialize(environment);
+config.initialize(environment);
 
 // Allowing CORS
 app.use(cors());
@@ -23,6 +24,10 @@ app.use(function (err, req, res, next) {
     status: 'Failure',
     message: err.message
   });
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 app.listen(port, () => console.log(`Server listening on port ${port}!`));

@@ -6,19 +6,22 @@ const jwt = require('../utils/jwt');
 
 const userActions = {
   register: asyncMiddleware(async (req, res) => {
-    let user = await UserModel.findOne({ email: req.body.email });
+    let user = await UserModel.findOne({ nameEmail: req.body.nameEmail });
     if (user) {
-      res.status(status.client.badRequest).json({
-        message: 'Email Already Exists'
+      res.status(status.success.accepted).json({
+        message: 'Username or Email Already Exists',
+        status: 'failure'
       });
     } else {
 
       // Save new user to db
       let hashedPassword = await passwordUtils.hashPassword(req.body.password);
       let newUser = new UserModel({
-        name: req.body.name,
-        email: req.body.email,
-        password: hashedPassword
+        nameEmail: req.body.nameEmail,
+        password: hashedPassword,
+        dob: req.body.dob,
+        gender: req.body.gender,
+        country: req.body.country
       });
       let savedUser = await newUser.save();
 
@@ -27,6 +30,7 @@ const userActions = {
       delete addedUser.password;
       res.status(status.success.created).json({
         message: 'User Created Successfully',
+        status: 'success',
         data: addedUser,
         token: 'Bearer ' + await jwt.signJwt({ id: savedUser.id })
       });
@@ -34,7 +38,7 @@ const userActions = {
   }),
 
   login: asyncMiddleware(async (req, res) => {
-    let user = await UserModel.findOne({ email: req.body.email }).select('+password');
+    let user = await UserModel.findOne({ nameEmail: req.body.nameEmail }).select('+password');
     if (user) {
       let verified = await passwordUtils.comparePassword(req.body.password, user.password);
       if (verified) {
@@ -42,17 +46,20 @@ const userActions = {
         delete loggedUser.password;
         res.status(status.success.accepted).json({
           message: 'Logged In Successfully',
+          status: 'success',
           data: loggedUser,
           token: 'Bearer ' + await jwt.signJwt({ id: user.id })
         });
       } else {
-        res.status(status.client.badRequest).json({
-          message: 'Wrong Password'
+        res.status(status.success.accepted).json({
+          message: 'Wrong Password',
+          status: 'failure'
         });
       }
     } else {
-      res.status(status.client.notFound).json({
-        message: 'User Not Found'
+      res.status(status.success.accepted).json({
+        message: 'User Not Found',
+        status: 'failure'
       });
     }
   })
