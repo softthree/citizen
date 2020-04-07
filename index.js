@@ -12,6 +12,8 @@ config.initialize(environment);
 // Allowing CORS
 app.use(cors());
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Body Parser For Parsing The Request Body
 app.use(express.json({ limit: '50mb', extended: true }));
 
