@@ -4,6 +4,8 @@ const jwt = require('./utils/jwt');
 const GeneralController = require('./controllers/generalController');
 const UserController = require('./controllers/userController')
 const FeatureController = require('./controllers/featureController')
+const SeedController  = require('./controllers/seedController')
+
 
 
 router.get('/test', (req, res) => {
@@ -23,12 +25,13 @@ router.post('/addFeature', FeatureController.addFeature)
 router.get('/getFeature/:name', FeatureController.getFeatureInfo)
 router.get('/getFeatureList', FeatureController.getFeatureList)
 router.post('/updateFeature/:name', FeatureController.updateFeature)
+router.post('/insertFeatureImages/:name', FeatureController.insertFeatureImages)
 router.get('/recaptchaImages/:name', FeatureController.recaptchaImages)
 router.get('/levelsimages/:name', FeatureController.boundingImages)
 
-
-
-
+router.post('/addSatelliteImage/:id', SeedController.insertImage)
+router.post('/deleteSatelliteImage', SeedController.deleteImage)
+router.get('/getSatelliteImages', SeedController.getSatelliteImages)
 
 
 module.exports = router;
