@@ -3,6 +3,8 @@ const router = express.Router();
 const jwt = require('./utils/jwt');
 const GeneralController = require('./controllers/generalController');
 const UserController = require('./controllers/userController')
+const FeatureController = require('./controllers/featureController')
+
 
 router.get('/test', (req, res) => {
     res.send('Server Is Running!');
@@ -12,5 +14,21 @@ router.get('/test', (req, res) => {
 
 router.post('/login', UserController.login);
 router.post('/register', UserController.register);
+router.post('/update', jwt.verifyJwt, UserController.update);
+
+// Admin Routes
+
+router.get('/dashboard', GeneralController.dashboard)
+router.post('/addFeature', FeatureController.addFeature)
+router.get('/getFeature/:name', FeatureController.getFeatureInfo)
+router.get('/getFeatureList', FeatureController.getFeatureList)
+router.post('/updateFeature/:name', FeatureController.updateFeature)
+router.get('/recaptchaImages/:name', FeatureController.recaptchaImages)
+router.get('/levelsimages/:name', FeatureController.boundingImages)
+
+
+
+
+
 
 module.exports = router;

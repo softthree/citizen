@@ -18,6 +18,9 @@ var userSchema = new Schema({
     },
     country: {
         type: String
+    },
+    tasks: {
+        type: []
     }
 });
 

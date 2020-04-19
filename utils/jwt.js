@@ -13,6 +13,7 @@ async function verifyJwt(req, res, next) {
         token = token.slice(7, token.length);
         jwt.verify(token, 'thesecretekey', (err, decoded) => {
             if (decoded) {
+                console.log(decoded)
                 req.decoded = decoded;
                 next();
             } else {

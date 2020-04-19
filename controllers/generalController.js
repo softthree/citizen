@@ -6,49 +6,20 @@ const jwt = require('../utils/jwt');
 const nodemailer = require("nodemailer");
 
 const generalActions = {
-  contact: asyncMiddleware(async (req, res) => {
-    console.log(req.body)
-    let smtpTransport = nodemailer.createTransport({
-      service: "Gmail",
-      port: 465,
-      // insert the SoftThree Mail credentials in auth
-      auth: {
-        user: "softthree3@gmail.com",
-        pass: "codedecoder"
-      }
-    });
-    let mailOptions = {
-      from: req.body.email,
-      to: req.body.to,
-      subject: "Some One Want To Connect With SoftThree",
-      html: req.body.name + " wants to contact you. <br> His / Her Email Is:" + req.body.email + "<br> His / Her Message:" + req.body.message
-    };
-    let sentMail = await smtpTransport.sendMail(mailOptions);
-    res.status(status.success.accepted).json({
-      message: 'Mail Sent Successfully'
-    });
-  }),
+  // Admin
 
-  login: asyncMiddleware(async (req, res) => {
-    let user = await UserModel.findOne({ email: req.body.email }).select('+password');
-    if (user) {
-      let verified = await passwordUtils.comparePassword(req.body.password, user.password);
-      if (verified) {
-        let loggedUser = user.toObject();
-        delete loggedUser.password;
-        res.status(status.success.accepted).json({
-          message: 'Logged In Successfully',
-          data: loggedUser,
-          token: 'Bearer ' + await jwt.signJwt({ id: user.id })
-        });
-      } else {
-        res.status(status.client.badRequest).json({
-          message: 'Wrong Password'
-        });
-      }
+  dashboard: asyncMiddleware(async (req, res) => {
+    let users = await UserModel.find();
+    if (users) {
+      res.status(status.success.accepted).json({
+        message: 'User Records',
+        status: 'success',
+        data: users
+      });
     } else {
-      res.status(status.client.notFound).json({
-        message: 'User Not Found'
+      res.status(status.success.accepted).json({
+        message: 'Users Not Found',
+        status: 'failure'
       });
     }
   })

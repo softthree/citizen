@@ -62,7 +62,23 @@ const userActions = {
         status: 'failure'
       });
     }
+  }),
+
+  update: asyncMiddleware(async (req, res) => {
+    console.log(req.body, req.decoded)
+    let user = await UserModel.findByIdAndUpdate(req.decoded.id,
+      { $push: { "tasks": req.body } },
+      { new: true }
+    )
+    if (user) {
+      res.status(status.success.accepted).json({
+        message: 'Task Added',
+        status: 'success',
+        data: user
+      });
+    }
   })
+
 };
 
 module.exports = userActions;
