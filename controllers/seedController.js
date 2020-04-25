@@ -7,22 +7,6 @@ const jwt = require('../utils/jwt');
 
 const seedActions = {
     insertImage: asyncMiddleware(async (req, res) => {
-        // Logic for seeding
-        // let image = new SeedModel({ ...req.body })
-        // let imageInserted = await image.save()
-        // if (imageInserted) {
-        //     res.status(status.success.accepted).json({
-        //         message: 'Image Inserted',
-        //         status: 'success'
-        //     });
-        // } else {
-        //     res.status(status.success.accepted).json({
-        //         message: 'Image insertion failed',
-        //         status: 'failure'
-        //     });
-        // }
-
-        // let image = await SeedModel.findByIdAndUpdate(req.body.id, { $push: { "sateliteImages": req.body.image } },
         let image = await SeedModel.findByIdAndUpdate(req.params.id, { "satelliteImages": req.body },
             { new: true }
         )

@@ -1,4 +1,5 @@
 const UserModel = require('../models/user');
+const AdminModel = require('../models/admin');
 const asyncMiddleware = require('../utils/asyncMiddleware');
 const status = require('../utils/statusCodes');
 const passwordUtils = require('../utils/passwordHash');
@@ -75,6 +76,33 @@ const userActions = {
         message: 'Task Added',
         status: 'success',
         data: user
+      });
+    }
+  }),
+
+  // Admin
+  adminLogin:asyncMiddleware(async (req, res) => {
+    let user = await AdminModel.findOne({ userName: req.body.nameEmail }).select('+password');
+    if (user) {
+      let verified = await passwordUtils.comparePassword(req.body.password, user.password);
+      if (verified) {
+        let loggedUser = user.toObject();
+        delete loggedUser.password;
+        res.status(status.success.accepted).json({
+          message: 'Logged In Successfully',
+          status: 'success',
+          token: 'Bearer ' + await jwt.signJwt({ id: user.id })
+        });
+      } else {
+        res.status(status.success.accepted).json({
+          message: 'Wrong Password',
+          status: 'failure'
+        });
+      }
+    } else {
+      res.status(status.success.accepted).json({
+        message: 'User Not Found',
+        status: 'failure'
       });
     }
   })

@@ -14,6 +14,9 @@ app.use(cors());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(express.static(path.join(__dirname, 'admin')));
+
+
 // Body Parser For Parsing The Request Body
 app.use(express.json({ limit: '50mb', extended: true }));
 
@@ -26,6 +29,10 @@ app.use(function (err, req, res, next) {
     status: 'Failure',
     message: err.message
   });
+});
+
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'admin/index.html'));
 });
 
 app.get('*', (req, res) => {

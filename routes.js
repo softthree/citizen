@@ -18,16 +18,21 @@ router.post('/login', UserController.login);
 router.post('/register', UserController.register);
 router.post('/update', jwt.verifyJwt, UserController.update);
 
+
+router.post('/adminLogin', UserController.adminLogin);
+
 // Admin Routes
 
 router.get('/dashboard', GeneralController.dashboard)
 router.post('/addFeature', FeatureController.addFeature)
 router.get('/getFeature/:name', FeatureController.getFeatureInfo)
+router.get('/deleteFeature/:id', FeatureController.deleteFeature)
 router.get('/getFeatureList', FeatureController.getFeatureList)
 router.post('/updateFeature/:name', FeatureController.updateFeature)
 router.post('/insertFeatureImages/:name', FeatureController.insertFeatureImages)
 router.get('/recaptchaImages/:name', FeatureController.recaptchaImages)
 router.get('/levelsimages/:name', FeatureController.boundingImages)
+
 
 router.post('/addSatelliteImage/:id', SeedController.insertImage)
 router.post('/deleteSatelliteImage', SeedController.deleteImage)
