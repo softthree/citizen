@@ -8,6 +8,7 @@ const SeedController  = require('./controllers/seedController')
 
 
 
+
 router.get('/test', (req, res) => {
     res.send('Server Is Running!');
 });
@@ -37,6 +38,11 @@ router.get('/levelsimages/:name', FeatureController.boundingImages)
 router.post('/addSatelliteImage/:id', SeedController.insertImage)
 router.post('/deleteSatelliteImage', SeedController.deleteImage)
 router.get('/getSatelliteImages', SeedController.getSatelliteImages)
+
+router.get('/getLinks', GeneralController.getLinks)
+router.post('/updateLinks', GeneralController.updateLinks)
+
+
 
 
 module.exports = router;
