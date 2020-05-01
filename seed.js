@@ -13,19 +13,18 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', async function () {
     console.log('Database is connected!');
 
-    let satelliteImages = await SeedModel.find();
-    // if (!satelliteImages) {
-    let seedImages = new SeedModel({
-        satelliteImages: [],
-        links: {
-            text: 'We offer you netflix for free for Staying safe and enjoying the Internet at home',
-            linkToSend: 'https://coolstuffsonline.com',
-            linkToRedirect: 'https://coolstuffsonline.com',
-            sendingText: 'Enjoy Netflix'
-        }
-    });
+    // let satelliteImages = await SeedModel.find();
+    // let seedImages = new SeedModel({
+    //     satelliteImages: [],
+    //     links: {
+    //         text: 'We offer you netflix for free for Staying safe and enjoying the Internet at home',
+    //         linkToSend: 'https://coolstuffsonline.com',
+    //         linkToRedirect: 'https://coolstuffsonline.com',
+    //         sendingText: 'Enjoy Netflix'
+    //     }
+    // });
 
-    await seedImages.save();
+    // await seedImages.save();
 
     let links = new LinkModel({
         links: {
@@ -39,18 +38,18 @@ db.once('open', async function () {
     await links.save();
     // }
 
-    let admin = {
-        userName: 'test',
-        password: 'test123'
-    }
+    // let admin = {
+    //     userName: 'test',
+    //     password: 'test123'
+    // }
 
-    let hashedPassword = await passwordUtils.hashPassword(admin.password);
-    let defaultUser = new AdminModel({
-        userName: admin.userName,
-        password: hashedPassword
-    })
+    // let hashedPassword = await passwordUtils.hashPassword(admin.password);
+    // let defaultUser = new AdminModel({
+    //     userName: admin.userName,
+    //     password: hashedPassword
+    // })
 
-    await defaultUser.save();
+    // await defaultUser.save();
 
     mongoose.disconnect();
 });

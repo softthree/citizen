@@ -1,8 +1,8 @@
 {
     "development": {
-        "db": "mongodb://citizen:citizen1@ds253348.mlab.com:53348/citizen"
+        "db": "mongodb+srv://anish:anish123@cluster0-kq6ft.mongodb.net/test?retryWrites=true&w=majority"
     },
     "production": {
-        "db": "mongodb://citizen:citizen1@ds253348.mlab.com:53348/citizen"
+        "db": "mongodb+srv://anish:anish123@cluster0-kq6ft.mongodb.net/test?retryWrites=true&w=majority"
     }
 }
